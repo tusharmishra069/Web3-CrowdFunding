@@ -255,20 +255,44 @@ See `.env.example` in the `client` directory for a complete template.
 
 #### Vercel (Recommended)
 
-1. Install Vercel CLI:
+1. **Create `vercel.json` in the `client` directory**:
+   ```json
+   {
+     "buildCommand": "npm run build",
+     "outputDirectory": "dist",
+     "framework": "vite",
+     "rewrites": [
+       {
+         "source": "/(.*)",
+         "destination": "/index.html"
+       }
+     ]
+   }
+   ```
+   > **Important**: The `rewrites` configuration is critical for SPA routing. Without it, you'll see a white screen or 404 errors.
+
+2. Install Vercel CLI (optional):
    ```bash
    npm install -g vercel
    ```
 
-2. Deploy:
+3. Deploy:
    ```bash
    cd client
    vercel
    ```
 
-3. Set environment variables in Vercel dashboard:
-   - `VITE_CONTRACT_ADDRESS`
-   - `VITE_THIRDWEB_CLIENT_ID`
+4. Set environment variables in Vercel dashboard:
+   - Go to Project Settings → Environment Variables
+   - Add `VITE_CONTRACT_ADDRESS` with your contract address
+   - Add `VITE_THIRDWEB_CLIENT_ID` if using Thirdweb
+   - Apply to Production, Preview, and Development environments
+
+5. **If you see a white screen**: 
+   - Ensure `vercel.json` is committed and pushed
+   - Verify environment variables are set
+   - Check browser console for errors
+   - Redeploy from Vercel dashboard
 
 #### Netlify
 
