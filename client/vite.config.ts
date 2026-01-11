@@ -43,7 +43,7 @@ export default defineConfig({
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'thirdweb-vendor': ['@thirdweb-dev/react', '@thirdweb-dev/sdk'],
-          'ethers-vendor': ['ethers']
+
         }
       }
     },
