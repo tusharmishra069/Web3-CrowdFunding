@@ -211,21 +211,6 @@ CrowdFund/
    ```
 3. Copy the deployed contract address to your `.env` file
 
-## 📸 Screenshots
-
-<!-- Screenshots will be added here -->
-
-### Home Page
-<!-- ![Home Page](path/to/screenshot) -->
-
-### Create Campaign
-<!-- ![Create Campaign](path/to/screenshot) -->
-
-### Campaign Details
-<!-- ![Campaign Details](path/to/screenshot) -->
-
-### User Profile
-<!-- ![User Profile](path/to/screenshot) -->
 
 ## 🔑 Key Features Explained
 
