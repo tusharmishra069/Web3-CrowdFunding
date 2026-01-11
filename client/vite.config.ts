@@ -26,5 +26,28 @@ export default defineConfig({
         NodeModulesPolyfillPlugin()
       ]
     }
+  },
+  build: {
+    // Optimize bundle size
+    target: 'es2015',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console.log in production
+        drop_debugger: true
+      }
+    },
+    // Chunk splitting for better caching
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'thirdweb-vendor': ['@thirdweb-dev/react', '@thirdweb-dev/sdk'],
+          'ethers-vendor': ['ethers']
+        }
+      }
+    },
+    // Increase chunk size warning limit
+    chunkSizeWarningLimit: 1000
   }
 });

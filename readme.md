@@ -211,6 +211,143 @@ CrowdFund/
    ```
 3. Copy the deployed contract address to your `.env` file
 
+## 🚢 Production Deployment
+
+### Environment Variables
+
+Before deploying to production, ensure you have the following environment variables configured:
+
+```env
+# Required
+VITE_CONTRACT_ADDRESS=0x...        # Your deployed smart contract address
+VITE_THIRDWEB_CLIENT_ID=...        # Your Thirdweb client ID (get from thirdweb.com/dashboard)
+```
+
+See `.env.example` in the `client` directory for a complete template.
+
+### Building for Production
+
+1. **Install dependencies** (if not already done):
+   ```bash
+   cd client
+   npm install
+   ```
+
+2. **Build the production bundle**:
+   ```bash
+   npm run build
+   ```
+   
+   This will:
+   - Compile TypeScript
+   - Bundle and minify code with Vite
+   - Remove console.log statements
+   - Optimize chunks for better caching
+   - Generate production-ready files in `dist/`
+
+3. **Preview the production build locally**:
+   ```bash
+   npm run preview
+   ```
+   Access at `http://localhost:4173`
+
+### Deployment Platforms
+
+#### Vercel (Recommended)
+
+1. Install Vercel CLI:
+   ```bash
+   npm install -g vercel
+   ```
+
+2. Deploy:
+   ```bash
+   cd client
+   vercel
+   ```
+
+3. Set environment variables in Vercel dashboard:
+   - `VITE_CONTRACT_ADDRESS`
+   - `VITE_THIRDWEB_CLIENT_ID`
+
+#### Netlify
+
+1. Install Netlify CLI:
+   ```bash
+   npm install -g netlify-cli
+   ```
+
+2. Deploy:
+   ```bash
+   cd client
+   netlify deploy --prod
+   ```
+
+3. Configure environment variables in Netlify dashboard
+
+#### Manual Deployment
+
+After building, upload the `client/dist/` directory to any static hosting service (AWS S3, GitHub Pages, etc.)
+
+### Production Checklist
+
+Before deploying to production, ensure:
+
+- [ ] Smart contract is deployed and verified on Sepolia (or mainnet)
+- [ ] Environment variables are configured correctly
+- [ ] Production build completes without errors
+- [ ] All console.log statements are removed (automatic in build)
+- [ ] MetaMask connection works on production URL
+- [ ] Campaign creation and donation flows tested
+- [ ] 404 page displays correctly for invalid routes
+- [ ] SEO meta tags are properly configured
+- [ ] Error boundaries catch and display errors gracefully
+
+### Troubleshooting
+
+#### Build Errors
+
+**Issue**: `terser not found` error during build
+```bash
+# Solution: Install terser as dev dependency
+npm install -D terser
+```
+
+**Issue**: TypeScript compilation errors
+```bash
+# Solution: Check for type errors
+npx tsc --noEmit
+```
+
+#### Runtime Errors
+
+**Issue**: "Contract is not initialized" error
+- **Solution**: Ensure `VITE_CONTRACT_ADDRESS` is set correctly in environment variables
+- Verify the contract address is valid and deployed on the correct network
+
+**Issue**: MetaMask not connecting
+- **Solution**: Ensure MetaMask is installed and connected to Sepolia testnet
+- Check that the website URL is added to MetaMask's connected sites
+
+**Issue**: Transactions failing
+- **Solution**: Ensure you have sufficient Sepolia ETH for gas fees
+- Verify the smart contract is deployed and accessible
+- Check MetaMask network settings
+
+#### Performance Issues
+
+**Issue**: Large bundle size warnings
+- The app uses Web3 libraries which are inherently large
+- Chunk splitting is already configured to optimize caching
+- Consider implementing route-based code splitting for further optimization
+
+### Security Considerations
+
+- Never commit `.env` files to version control
+- Always use environment variables for sensitive data
+- Test thoroughly on testnet before deploying to mainnet
+- Consider getting smart contracts audited before mainnet deployment
+- Implement rate limiting if deploying backend services
 
 ## 🔑 Key Features Explained
 

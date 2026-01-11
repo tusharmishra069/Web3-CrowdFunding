@@ -30,33 +30,21 @@ const CampaignDetails = () => {
 
   const remainingDays = daysLeft(state.deadline);
 
-  // Log component state on every render
-  console.log("CampaignDetails render:", {
-    hasContract: !!contract,
-    hasAddress: !!address,
-    pId: state?.pId,
-    donatorsCount: donators.length
-  });
-
   const fetchDonators = async () => {
     if (state?.pId === undefined || state?.pId === null) {
-      console.error("Project ID (pId) is required");
       return;
     }
     try {
-      console.log("Fetching donators for campaign:", state.pId);
       const data = await getDonations(state.pId);
-      console.log("Donators data received:", data);
       setDonators(data);
     } catch (error) {
-      console.error("Failed to fetch donators:", error);
+      // Silently fail - donators list will remain empty
+      setDonators([]);
     }
   }
 
   useEffect(() => {
-    console.log("useEffect triggered:", { hasContract: !!contract, pId: state?.pId });
     if (contract && (state?.pId !== undefined && state?.pId !== null)) {
-      console.log("Calling fetchDonators...");
       fetchDonators();
     }
   }, [contract, address, state?.pId]);
@@ -84,8 +72,7 @@ const CampaignDetails = () => {
         }, 3000);
       }, 3000); // Wait 3 seconds for transaction to be confirmed
     } catch (error) {
-      console.error("Failed to donate:", error);
-      alert("Donation failed. Please try again.");
+      alert("Donation failed. Please check your wallet and try again.");
       setIsLoading(false);
     }
   };

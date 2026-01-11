@@ -46,7 +46,7 @@ export const StateContextProvider = ({
         chainId: 11155111,
       });
     } catch (error) {
-      console.error("Failed to connect with Metamask to Sepolia:", error);
+      throw new Error("Failed to connect wallet. Please ensure MetaMask is installed and try again.");
     }
   };
 
@@ -62,9 +62,9 @@ export const StateContextProvider = ({
           form.image,
         ],
       });
-      console.log("success", data);
+      return data;
     } catch (err) {
-      console.log("contract call failed", err);
+      throw new Error("Failed to create campaign. Please check your wallet and try again.");
     }
   };
 
@@ -99,7 +99,7 @@ export const StateContextProvider = ({
 
   const donate = async (pId: any, amount: any) => {
     if (!contract) {
-      throw new Error("Contract is not initialized");
+      throw new Error("Contract is not initialized. Please connect your wallet.");
     }
 
     try {
@@ -109,7 +109,7 @@ export const StateContextProvider = ({
       });
       return data;
     } catch (error) {
-      console.error("Donation failed:", error);
+      throw new Error("Donation failed. Please ensure you have sufficient funds and try again.");
     }
   };
 
